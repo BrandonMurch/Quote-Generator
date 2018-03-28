@@ -1,14 +1,21 @@
-var quoteForLink="",
-  authorForLink="";
-var imageSize = "https://source.unsplash.com/random/" + $(window).width() + "x" + $(window).height();
-var img = "<div>"
-
-function getBackground(){
-  img += "<img src = '" + imageSize + "' alt='Nature Background'>"
-  img += "</div>"
-  $("#backgroundImg").html(img);
+/*
+@description - Automatically retreive a quote. Each time a quote is
+               retrieved, the background changes. The user may also press
+               tweet button to open up a new tab and tweet the quote.
+@input - Generate a new quote or tweet the current quote by pressing buttons
+@author - Brandon - Brandon.Murch@protonmail.com
+*/
+                /*Dynamically gets the background from Upsplash
+                based on the users screen size */
+const getBackground = () => {
+  let imgURL = "https://source.unsplash.com/random/" + $(window).width()
+    + "x" + $(window).height()
+  $(".background").css("background-image", "url(" + imgURL + ")");
 }
-function getQuote(){
+                /*Gets a random quote, then modifies the HTML to display it.
+                  Generates a tweet button using the quote so the user will
+                  have the quote pre-typed when the link is opened. */
+const getQuote = () => {
   $.ajax({
     headers: {
       "X-Mashape-Key": "OivH71yd3tmshl9YKzFH7BTzBVRQp1RaKLajsnafgL2aPsfP9V",
@@ -21,19 +28,21 @@ function getQuote(){
       if (typeof val === "string") {
         val = JSON.parse(val);
       }
-      $("#quoteHere").html(val.quote);
-      $("#authorHere").html(" - " + val.author);
-      window.quoteForLink = encodeURIComponent(val.quote).replace(/'/g, "%27");
-      window.authorForLink = encodeURIComponent(val.author).replace(/'/g, "%27");
-      $("#tweetBtn").html("<a href='https://twitter.com/intent/tweet?text="+ window.quoteForLink +"  - "+ window.authorForLink + "'><span class='glyphicon glyphicon-send'></span>   Tweet</a>");
+      $(".quote__text--quote").html(val.quote);
+      $(".quote__text--author").html(" - " + val.author);
+      let quoteForLink = encodeURIComponent(val.quote).replace(/'/g, "%27");
+      let authorForLink = encodeURIComponent(val.author).replace(/'/g, "%27");
+      $(".button--tweet").html("<a href='https://twitter.com/intent/tweet?text="
+        + window.quoteForLink +"  - "+ window.authorForLink
+        + "'><span class='glyphicon glyphicon-send'></span>    Tweet</a>");
       },
     });
 }
 
-$(document).ready(function() {
+$(document).ready(() => {
   getBackground();
   getQuote();
-  $("#generateBtn").click(function () {
-    location.reload();
+  $(".button--generate").click(function () {
+    location.reload(); //reloads the page for a new tweet/background
   });
 });
