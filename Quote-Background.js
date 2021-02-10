@@ -5,7 +5,7 @@
 @input - Generate a new quote or tweet the current quote by pressing buttons
 @author - Brandon - Brandon.Murch@protonmail.com
 */
-                /*Dynamically gets the background from Upsplash
+                /*Dynamically gets the background from Unsplash
                 based on the users screen size */
 const getBackground = () => {
   let imgURL = "https://source.unsplash.com/random/" + $(window).width()
