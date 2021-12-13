@@ -33,7 +33,7 @@ const getQuote = () => {
       let quoteForLink = encodeURIComponent(val.quoteText).replace(/'/g, "%27");
       let authorForLink = encodeURIComponent(val.quoteAuthor).replace(/'/g, "%27");
       $(".button--tweet").html("<a href='https://twitter.com/intent/tweet?text="
-        + window.quoteForLink +"  - "+ window.authorForLink
+        + quoteForLink +"  - "+ authorForLink
         + "'><span class='glyphicon glyphicon-send'></span>    Tweet</a>");
       },
     error: function(errorMessage) {
